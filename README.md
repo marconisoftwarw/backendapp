@@ -12,7 +12,6 @@ Swagger docs at link: http://localhost:3001/api/
 
 # Script download.py permette il download dei file
 
-
 # K8s file
 
 kubectl apply -f k8-templates/k8-config.yaml
