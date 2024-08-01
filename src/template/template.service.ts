@@ -153,9 +153,6 @@ export class TemplateService {
 </body>
 </html>
  `;
-
-
-
     }
 
     if (templateHTML.length > 0) {
