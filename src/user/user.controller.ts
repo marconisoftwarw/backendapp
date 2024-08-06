@@ -5,8 +5,8 @@ import { JwtService } from "@nestjs/jwt";
 import { UtenteLogin } from "./entities/user.entity";
 import { Response, Request } from "express";
 import { ApiTags } from "@nestjs/swagger";
-import { UserType } from "src/support";
-import { sendEmail } from "../support";
+
+import { sendEmail,UserType} from "../support";
 
 @ApiTags("user")
 @Controller("user")

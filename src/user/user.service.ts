@@ -1,11 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectConnection, InjectRepository } from "@nestjs/typeorm";
-import { UserType } from "src/support";
 import { Connection, createQueryBuilder, Repository } from "typeorm";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { User, UtenteLogin } from "./entities/user.entity";
-import { sendEmail } from "../support";
+import { sendEmail,UserType } from "../support";
 @Injectable()
 export class UserService {
   constructor(
