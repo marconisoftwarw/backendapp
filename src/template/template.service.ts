@@ -126,7 +126,7 @@ export class TemplateService {
             margin: 10px;
             width: 150px; /* Adjust width as needed */
             height: 200px; /* Adjust height as needed */
-            border-radius: 50%; /* Make the image oval */
+            border-radius: 10%; /* Make the image oval */
         }
         .slideshow-container h2 {
             margin-top: 10px;
@@ -146,14 +146,15 @@ export class TemplateService {
 </head>
 <body>
     <div class='slideshow-container'>
-        <img src="image.png" alt="Image" style="border-radius: 30%;margin-right: 30%" > <!-- Ensure the image displays properly and is oval -->
-        <h2  style="margin-right: 30%">${nome}</h2> <!-- Name below the image -->
-        <div style="margin-left: 60%"> <p>Messaggio: ${testotemp}</p></div>
+        <img src="image.png" alt="Image" style="border-radius: 30%;margin-right: 10%" > <!-- Ensure the image displays properly and is oval -->
+        <h2  style="margin-right: 50%">${nome} <br> ${testotemp}</br></h2> <!-- Name below the image -->
+      
     </div>
 </body>
 </html>
  `;
     } else if (templateType === TemplateType.TEMPLATE2) {
+
             let base64Image = image1.split(";base64,").pop();
       fs.writeFile(
         `${dir}/image.png`,
