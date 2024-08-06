@@ -8,7 +8,6 @@ import { NestExpressApplication } from "@nestjs/platform-express";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  //Set max file size of body json
   app.use(bodyParser.json({ limit: "5000mb" }));
   app.use(bodyParser.urlencoded({ limit: "5000mb", extended: true }));
   const config = new DocumentBuilder()

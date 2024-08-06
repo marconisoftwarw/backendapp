@@ -27,7 +27,7 @@ import { MessaggioModule } from "./messaggio/messaggio.module";
       host: "127.0.0.1",
       port: 3306,
       username: "root",
-      password: "wp54xBC,!?ir",
+      password: "4817Riccardo*", //"wp54xBC,!?ir",
       database: "backendapp",
       synchronize: true,
       entities: ["dist/**/*.entity{.ts,.js}"],
