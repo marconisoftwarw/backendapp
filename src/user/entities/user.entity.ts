@@ -7,7 +7,7 @@ import {
   MinLength,
 } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
-import { sendEmail,UserType} from "../../support";
+import { sendEmail, UserType } from "../../support";
 
 @Entity()
 export class User extends BaseEntity {

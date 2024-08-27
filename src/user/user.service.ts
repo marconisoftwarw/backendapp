@@ -4,7 +4,7 @@ import { Connection, createQueryBuilder, Repository } from "typeorm";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { User, UtenteLogin } from "./entities/user.entity";
-import { sendEmail,UserType } from "../support";
+import { sendEmail, UserType } from "../support";
 @Injectable()
 export class UserService {
   constructor(

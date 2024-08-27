@@ -154,8 +154,7 @@ export class TemplateService {
 </html>
  `;
     } else if (templateType === TemplateType.TEMPLATE2) {
-
-            let base64Image = image1.split(";base64,").pop();
+      let base64Image = image1.split(";base64,").pop();
       fs.writeFile(
         `${dir}/image.png`,
         base64Image,
