@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>1</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            height: 100%;
+        }
+        body {
+            font-family: Verdana, sans-serif;
+            background-image: url('https://www.marconisoftware.com/assets/06.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100%;
+        }
+        .slideshow-container {
+            max-width: 400px;
+            position: relative;
+            margin: auto;
+            text-align: right; /* Align the text to the right */
+            height: 100%; /* Ensure the container takes the full available height */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align items to the start (left) */
+            justify-content: center; /* Center items vertically */
+        }
+        .slideshow-container img {
+            margin: 10px;
+            width: 150px; /* Adjust width as needed */
+            height: 200px; /* Adjust height as needed */
+            border-radius: 50%; /* Make the image oval */
+        }
+        .slideshow-container h2 {
+            margin-top: 10px;
+            text-align: left; /* Align the title to the left */
+            color: black; /* Set text color to black */
+        }
+        .slideshow-container p {
+            text-align: right; /* Align the paragraph to the right */
+            color: black; /* Set text color to black */
+        }
+        @media only screen and (max-width: 300px) {
+            .slideshow-container h2, .slideshow-container p {
+                font-size: 11px; /* Adjust font size for small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class='slideshow-container'>
+        <img src="image.png" alt="Image" style="border-radius: 30%;margin-right: 30%" > <!-- Ensure the image displays properly and is oval -->
+        <h2  style="margin-right: 30%">sdsd</h2> <!-- Name below the image -->
+        <div style="margin-left: 60%"> <p>Messaggio: sdsd</p></div>
+    </div>
+</body>
+</html>
+ 
