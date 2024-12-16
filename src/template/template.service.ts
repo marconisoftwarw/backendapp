@@ -78,7 +78,6 @@ export class TemplateService {
       fs.mkdirSync(dir);
     }
 
-    
     if (templateType === TemplateType.TEMPLATE1) {
       let base64Image = image1.split(";base64,").pop();
       fs.writeFile(
@@ -454,8 +453,7 @@ export class TemplateService {
 </body>
 </html>
  `;
-    }
-     else if (templateType === TemplateType.TEMPLATE6) {
+    } else if (templateType === TemplateType.TEMPLATE6) {
       let base64Image = image1.split(";base64,").pop();
       fs.writeFile(
         `${dir}/image.png`,
