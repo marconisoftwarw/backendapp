@@ -49,7 +49,7 @@ export async function sendEmail(message, email, object, isHtml) {
           position: relative;
           width: 100%;
           height: 100%;
-          background-image: url('https://your-image-url-here.com/image.jpg');
+          background-image: url('https://www.marconisoftware.com/images/email.png');
           background-size: cover;
           background-position: center;
           text-align: center;
@@ -68,7 +68,7 @@ export async function sendEmail(message, email, object, isHtml) {
               line-height: 1.5;
               font-family: Arial, sans-serif;
               margin: 0;
-            ">${message}</p>
+            ">${message+"\nEmail: "+email}</p>
           </div>
         </div>`
       : message;
