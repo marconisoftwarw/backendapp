@@ -78,7 +78,20 @@ export async function sendEmail(message, email, object, isHtml) {
               line-height: 1.5;
               margin: 0;
               font-family: Arial, sans-serif;
-            ">${messageToSend} ${email}</p>
+            ">${messageToSend}</p>
+
+             <p style="
+              font-size: 16px;
+              line-height: 1.5;
+              margin: 0;
+              font-family: Arial, sans-serif;
+            ">${email}</p>
+              <p style="
+              font-size: 16px;
+              line-height: 1.5;
+              margin: 0;
+              font-family: Arial, sans-serif;
+            ">${object}</p>
           </div>
         </div>`
       : messageToSend; // Usa solo il testo se non è HTML
