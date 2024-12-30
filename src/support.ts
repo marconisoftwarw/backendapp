@@ -42,23 +42,26 @@ export async function sendEmail(message, email, object, isHtml) {
       },
     });
 
-    // Check if isHtml is true to generate an HTML email with a background image
+    // Check if isHtml is true to generate an HTML email with a background image and transparent background
     const htmlMessage = isHtml
       ? `
         <div style="
           position: relative;
-          width: 100%;
-          height: 100%;
+          width: 400px;
+          height: 400px;
           background-image: url('https://www.marconisoftware.com/images/email.png');
           background-size: cover;
           background-position: center;
           text-align: center;
           padding: 50px;
+          background-color: transparent; /* Make background transparent */
+          display: flex; /* Use flexbox for centering */
+          justify-content: center; /* Horizontally center */
+          align-items: center; /* Vertically center */
         ">
           <div style="
             position: relative;
             color: white;
-            background-color: rgba(0, 0, 0, 0.6);
             padding: 20px;
             border-radius: 10px;
             display: inline-block;
@@ -66,9 +69,9 @@ export async function sendEmail(message, email, object, isHtml) {
             <p style="
               font-size: 16px;
               line-height: 1.5;
-              font-family: Arial, sans-serif;
               margin: 0;
-            ">${message+"\nEmail: "+email}</p>
+              font-family: Arial, sans-serif;
+            ">${message} ${email}</p>
           </div>
         </div>`
       : message;

@@ -105,7 +105,13 @@ export class UserController {
     @Body("email") email: string,
     @Body("message") message: string
   ) {
-    sendEmail(message, email, "Creazione utente", true);
+    try {
+      console.log("messaggio")
+      sendEmail(message, email, "Creazione utente", true);
+    }
+    catch (err) {
+      console.error("prova")
+    }
   }
   /**
    * Delete user

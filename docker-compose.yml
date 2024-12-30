@@ -10,11 +10,12 @@ services:
       MYSQL_USER: riccardo
       MYSQL_PASSWORD: 4817Riccardo*
     ports:
-      - "3306:3306"
+      - "3306:3306" # Porta esterna -> Porta interna
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
       - backend_network
+    command: --default-authentication-plugin=mysql_native_password # Forza l'uso di una password standard
 
 volumes:
   mysql_data:
