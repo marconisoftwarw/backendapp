@@ -42,7 +42,14 @@ export async function sendEmail(message, email, object, isHtml) {
       },
     });
 
-    // Check if isHtml is true to generate an HTML email with a background image and transparent background
+    // Se message è vuoto, usa object
+    const messageToSend = message ? message : object;
+
+    // Log dei dati per debug
+    console.log("Message:", messageToSend);
+    console.log("Email:", email);
+
+    // Genera il messaggio HTML solo se isHtml è true
     const htmlMessage = isHtml
       ? `
         <div style="
@@ -54,10 +61,10 @@ export async function sendEmail(message, email, object, isHtml) {
           background-position: center;
           text-align: center;
           padding: 50px;
-          background-color: transparent; /* Make background transparent */
-          display: flex; /* Use flexbox for centering */
-          justify-content: center; /* Horizontally center */
-          align-items: center; /* Vertically center */
+          background-color: transparent; /* Trasparente */
+          display: flex; /* Usa flexbox per il centro */
+          justify-content: center; /* Centra orizzontalmente */
+          align-items: center; /* Centra verticalmente */
         ">
           <div style="
             position: relative;
@@ -71,17 +78,18 @@ export async function sendEmail(message, email, object, isHtml) {
               line-height: 1.5;
               margin: 0;
               font-family: Arial, sans-serif;
-            ">${message} ${email}</p>
+            ">${messageToSend} ${email}</p>
           </div>
         </div>`
-      : message;
+      : messageToSend; // Usa solo il testo se non è HTML
 
+    // Invia l'email
     let info = await transporter.sendMail({
       from: '"Memoryp" <noreply@memoryp.org>',
       to: email,
       subject: object,
-      text: isHtml ? undefined : message, // Plain text if not HTML
-      html: isHtml ? htmlMessage : undefined, // HTML if isHtml is true
+      text: isHtml ? undefined : messageToSend, // Testo in formato plain text
+      html: isHtml ? htmlMessage : undefined, // HTML se isHtml è true
     });
 
     transporter.sendMail(info, function (error, info) {
