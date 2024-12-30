@@ -127,7 +127,8 @@ export class UserService {
     sendEmail(
       "Benvenuto all'interno del servizio Memoryp",
       email,
-      "Registrazione Memoryp"
+      "Registrazione Memoryp",
+      true
     );
   }
 }

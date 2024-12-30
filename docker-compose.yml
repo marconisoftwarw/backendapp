@@ -16,24 +16,6 @@ services:
     networks:
       - backend_network
 
-  nestjs:
-    build:
-      context: . # Percorso della tua app NestJS
-      dockerfile: Dockerfile
-    container_name: nestjs_container
-    environment:
-      DATABASE_HOST: mysql
-      DATABASE_PORT: 3306
-      DATABASE_USER: riccardo
-      DATABASE_PASSWORD: 4817Riccardo*
-      DATABASE_NAME: backendapp
-    ports:
-      - "3000:3000" # Porta di esposizione dell'app NestJS
-    depends_on:
-      - mysql
-    networks:
-      - backend_network
-
 volumes:
   mysql_data:
 

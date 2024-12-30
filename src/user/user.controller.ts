@@ -105,7 +105,7 @@ export class UserController {
     @Body("email") email: string,
     @Body("message") message: string
   ) {
-    sendEmail(message, email, "Creazione utente");
+    sendEmail(message, email, "Creazione utente", true);
   }
   /**
    * Delete user

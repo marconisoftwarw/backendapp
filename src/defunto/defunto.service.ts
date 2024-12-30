@@ -70,7 +70,8 @@ export class DefuntoService {
         " ha chiesto di serguire il defunto: " +
         nomeDefunto,
       email,
-      "Richiest MemoryRip"
+      "Richiest MemoryRip",
+      true
     );
   }
 }
