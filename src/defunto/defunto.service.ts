@@ -67,7 +67,7 @@ export class DefuntoService {
       nome +
         " " +
         cognome +
-        " ha chiesto di serguire il defunto: " +
+        " ha chiesto di seguire il defunto: " +
         nomeDefunto,
       email,
       "Richiest MemoryRip",
