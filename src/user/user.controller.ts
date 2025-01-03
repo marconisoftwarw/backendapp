@@ -106,11 +106,10 @@ export class UserController {
     @Body("message") message: string
   ) {
     try {
-      console.log("messaggio")
+      console.log("messaggio");
       sendEmail(message, email, "Creazione utente", true);
-    }
-    catch (err) {
-      console.error("prova")
+    } catch (err) {
+      console.error("prova");
     }
   }
   /**

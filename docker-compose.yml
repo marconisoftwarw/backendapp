@@ -1,24 +1,36 @@
-version: "3.7"
-
+version: "3.8"
 services:
-  mysql:
-    image: mysql:8.0.39
-    container_name: mysql_container
-    environment:
-      MYSQL_ROOT_PASSWORD: 4817Riccardo*
-      MYSQL_DATABASE: backendapp
-      MYSQL_USER: riccardo
-      MYSQL_PASSWORD: 4817Riccardo*
+  backend-app:
+    container_name: nestjs-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "3306:3306" # Porta esterna -> Porta interna
+      - "3000:3000"
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=wp54xBC,!?ir
+      - DB_DATABASE=backendapp
+    depends_on:
+      - mysql
     volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - backend_network
-    command: --default-authentication-plugin=mysql_native_password # Forza l'uso di una password standard
+      - .:/app
+      - /app/node_modules
+    command: npm run start:dev
+
+  mysql:
+    container_name: mysql-db
+    image: mysql:8.0
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: wp54xBC,!?ir
+      MYSQL_DATABASE: backendapp
+    volumes:
+      - db-data:/var/lib/mysql
 
 volumes:
-  mysql_data:
-
-networks:
-  backend_network:
+  db-data:

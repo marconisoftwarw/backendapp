@@ -5,6 +5,7 @@ import { Repository } from "typeorm";
 import { CreateTemplateDto } from "./dto/create-template.dto";
 import { UpdateTemplateDto } from "./dto/update-template.dto";
 import { Template } from "./entities/template.entity";
+import path from "path";
 const AdmZip = require("adm-zip");
 
 @Injectable()
@@ -88,6 +89,16 @@ export class TemplateService {
           console.log(err);
         }
       );
+      const sourceFile = path.join(__dirname, "01.png"); // File sorgente
+      const destinationFile = path.join(__dirname, `${dir}`, "01.png"); // File destinazione
+
+      fs.copyFile(sourceFile, destinationFile, (err) => {
+        if (err) {
+          console.error("Errore durante la copia del file:", err);
+        } else {
+          console.log(`File copiato da ${sourceFile} a ${destinationFile}`);
+        }
+      });
       templateHTML = `
 <!DOCTYPE html>
 <html>
@@ -105,7 +116,7 @@ export class TemplateService {
         }
         body {
             font-family: Verdana, sans-serif;
-            background-image: url('https://www.marconisoftware.com/assets/01.png');
+             background-image: url('./01.png'); /* Percorso relativo all'immagine */
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
