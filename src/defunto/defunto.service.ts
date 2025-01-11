@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectConnection, InjectRepository } from "@nestjs/typeorm";
-import { Connection, getRepository, Repository } from "typeorm";
+import { Connection, Repository } from "typeorm";
 import { CreateDefuntoDto } from "./dto/create-defunto.dto";
 import { Defunto } from "./entities/defunto.entity";
 import { sendEmail } from "../support";
+
 @Injectable()
 export class DefuntoService {
   constructor(

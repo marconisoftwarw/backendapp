@@ -1,12 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { TemplateType } from "src/support";
 import { Repository } from "typeorm";
+import * as fs from "fs";
+import * as path from "path";
+import * as AdmZip from "adm-zip";
 import { CreateTemplateDto } from "./dto/create-template.dto";
 import { UpdateTemplateDto } from "./dto/update-template.dto";
 import { Template } from "./entities/template.entity";
-import path from "path";
-const AdmZip = require("adm-zip");
+import { TemplateType } from "src/support";
+import axios from "axios";
 
 @Injectable()
 export class TemplateService {
@@ -15,16 +17,13 @@ export class TemplateService {
   async create(dto: CreateTemplateDto) {
     return this.repo.save(dto);
   }
+
   findAll() {
     return this.repo.find();
   }
 
   findOne(id: number) {
-    return this.repo.findOne({
-      where: {
-        id: id,
-      },
-    });
+    return this.repo.findOne({ where: { id } });
   }
 
   update(id: number, updateTemplateDto: UpdateTemplateDto) {
@@ -36,515 +35,222 @@ export class TemplateService {
   }
 
   /**
-   * Gestione a file zip
-   * @param folderName
-   * @param fileName
-   * @returns
+   * Zip a folder
+   * @param folderName - Name of the folder to zip
+   * @returns {Promise<boolean>}
    */
-  async zipFolder(folderName: string) {
-    var fs = require("fs");
-    const zip = new AdmZip();
-    const outputFile = folderName + ".zip";
-    zip.addLocalFolder("./" + folderName).then(() => {
-      zip.writeZip(outputFile);
-    });
+  async zipFolder(folderName: string): Promise<boolean> {
     try {
-      fs.unlinkSync(outputFile);
-    } catch (err) {
-      console.log("Errore non è presente un file da eliminare: " + err);
+      const zip = new AdmZip();
+      const outputFile = `${folderName}.zip`;
+
+      // Add folder to zip
+      zip.addLocalFolder(`./${folderName}`);
+      zip.writeZip(outputFile);
+
+      // Clean up: delete zip file after creation (optional)
+      if (fs.existsSync(outputFile)) {
+        fs.unlinkSync(outputFile);
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Error zipping folder:", error);
+      return false;
     }
-    return true;
   }
 
+  /**
+   * Metodo principale per generare un template
+   * @param nome Nome da visualizzare nel template
+   * @param testo Testo descrittivo
+   * @param image1 Immagine base64 caricata dall'utente
+   * @param idUser ID dell'utente
+   * @param idCimitero ID del cimitero
+   * @param idTotem ID del totem
+   * @param templateType Tipo di template (default/custom)
+   * @returns Promise<boolean> che indica il successo o fallimento
+   */
   async generatetemplate(
     nome: string,
     testo: string,
     image1: string,
-    image2: string,
-    image3: string,
     idUser: number,
     idCimitero: number,
     idTotem: number,
     templateType: TemplateType
-  ) {
-    var testotemp = testo ? testo : " ";
-    var fs = require("fs");
-    //1) Prima di creare i file dell'immagine su file system verifico che esista la cartella su file system
-    !fs.existsSync(`./cimitero${idCimitero}/`) &&
-      fs.mkdirSync(`./cimitero${idCimitero}/`, { recursive: true });
-    //2) Procedo a creare il file su filesystem
-    var templateHTML = "";
-    const dir = `./cimitero${idCimitero}/${idTotem}`;
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir);
-    }
+  ): Promise<boolean> {
+    try {
+      const testoFinale = testo || " ";
+      const baseDir = `./cimitero${idCimitero}/${idTotem}`;
+      // Creazione della directory se non esiste
+      this.ensureDirectoryExists(baseDir);
 
-    if (templateType === TemplateType.TEMPLATE1) {
-      let base64Image = image1.split(";base64,").pop();
-      fs.writeFile(
-        `${dir}/image.png`,
-        base64Image,
-        { encoding: "base64" },
-        function (err) {
-          console.log(err);
-        }
-      );
-      const sourceFile = path.join(__dirname, "01.png"); // File sorgente
-      const destinationFile = path.join(__dirname, `${dir}`, "01.png"); // File destinazione
+      // Salvataggio dell'immagine caricata dall'utente come "image.png"
+      if (image1) {
+        this.saveBase64Image(image1, path.join(baseDir, "image.png"));
+      }
 
-      fs.copyFile(sourceFile, destinationFile, (err) => {
-        if (err) {
-          console.error("Errore durante la copia del file:", err);
-        } else {
-          console.log(`File copiato da ${sourceFile} a ${destinationFile}`);
-        }
-      });
-      templateHTML = `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>1</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        html, body {
-            height: 100%;
-        }
-        body {
-            font-family: Verdana, sans-serif;
-             background-image: url('./01.png'); /* Percorso relativo all'immagine */
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            min-height: 100%;
-        }
-        .slideshow-container {
-            max-width: 400px;
-            position: relative;
-            margin: auto;
-            text-align: right; /* Align the text to the right */
-            height: 100%; /* Ensure the container takes the full available height */
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; /* Align items to the start (left) */
-            justify-content: center; /* Center items vertically */
-        }
-        .slideshow-container img {
-            margin: 10px;
-            width: 150px; /* Adjust width as needed */
-            height: 200px; /* Adjust height as needed */
-            border-radius: 10%; /* Make the image oval */
-        }
-        .slideshow-container h2 {
-            margin-top: 10px;
-            text-align: left; /* Align the title to the left */
-            color: black; /* Set text color to black */
-        }
-        .slideshow-container p {
-            text-align: right; /* Align the paragraph to the right */
-            color: black; /* Set text color to black */
-        }
-        @media only screen and (max-width: 300px) {
-            .slideshow-container h2, .slideshow-container p {
-                font-size: 11px; /* Adjust font size for small screens */
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class='slideshow-container'>
-        <img src="image.png" alt="Image" style="border-radius: 30%;margin-right: 10%" > <!-- Ensure the image displays properly and is oval -->
-        <h2  style="margin-right: 50%">${nome} <br> ${testotemp}</br></h2> <!-- Name below the image -->
-      
-    </div>
-</body>
-</html>
- `;
-    } else if (templateType === TemplateType.TEMPLATE2) {
-      let base64Image = image1.split(";base64,").pop();
-      fs.writeFile(
-        `${dir}/image.png`,
-        base64Image,
-        { encoding: "base64" },
-        function (err) {
-          console.log(err);
-        }
+      // Download dell'immagine di sfondo
+      const backgroundFile = path.join(baseDir, "background.png");
+      await this.downloadAndSaveImage(
+        this.getTemplateBackgroundURL(templateType),
+        backgroundFile
       );
-      templateHTML = `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>1</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        html, body {
-            height: 100%;
-        }
-        body {
-            font-family: Verdana, sans-serif;
-            background-image: url('https://www.marconisoftware.com/assets/02.png');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            min-height: 100%;
-        }
-        .slideshow-container {
-            max-width: 400px;
-            position: relative;
-            margin: auto;
-            text-align: right; /* Align the text to the right */
-            height: 100%; /* Ensure the container takes the full available height */
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; /* Align items to the start (left) */
-            justify-content: center; /* Center items vertically */
-        }
-        .slideshow-container img {
-            margin: 10px;
-            width: 150px; /* Adjust width as needed */
-            height: 200px; /* Adjust height as needed */
-            border-radius: 50%; /* Make the image oval */
-        }
-        .slideshow-container h2 {
-            margin-top: 10px;
-            text-align: left; /* Align the title to the left */
-            color: black; /* Set text color to black */
-        }
-        .slideshow-container p {
-            text-align: right; /* Align the paragraph to the right */
-            color: black; /* Set text color to black */
-        }
-        @media only screen and (max-width: 300px) {
-            .slideshow-container h2, .slideshow-container p {
-                font-size: 11px; /* Adjust font size for small screens */
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class='slideshow-container'>
-        <img src="image.png" alt="Image" style="border-radius: 30%;margin-right: 30%" > <!-- Ensure the image displays properly and is oval -->
-        <h2  style="margin-right: 30%">${nome}</h2> <!-- Name below the image -->
-        <div style="margin-left: 60%"> <p>Messaggio: ${testotemp}</p></div>
-    </div>
-</body>
-</html>
- `;
-    } else if (templateType === TemplateType.TEMPLATE3) {
-      let base64Image = image1.split(";base64,").pop();
-      fs.writeFile(
-        `${dir}/image.png`,
-        base64Image,
-        { encoding: "base64" },
-        function (err) {
-          console.log(err);
-        }
+
+      // Generazione del file HTML
+      const templateHTML = this.generateTemplateHTML(
+        templateType,
+        nome,
+        testoFinale,
+        "background.png"
       );
-      templateHTML = `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>1</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        html, body {
-            height: 100%;
-        }
-        body {
-            font-family: Verdana, sans-serif;
-            background-image: url('https://www.marconisoftware.com/assets/03.png');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            min-height: 100%;
-        }
-        .slideshow-container {
-            max-width: 400px;
-            position: relative;
-            margin: auto;
-            text-align: right; /* Align the text to the right */
-            height: 100%; /* Ensure the container takes the full available height */
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; /* Align items to the start (left) */
-            justify-content: center; /* Center items vertically */
-        }
-        .slideshow-container img {
-            margin: 10px;
-            width: 150px; /* Adjust width as needed */
-            height: 200px; /* Adjust height as needed */
-            border-radius: 50%; /* Make the image oval */
-        }
-        .slideshow-container h2 {
-            margin-top: 10px;
-            text-align: left; /* Align the title to the left */
-            color: black; /* Set text color to black */
-        }
-        .slideshow-container p {
-            text-align: right; /* Align the paragraph to the right */
-            color: black; /* Set text color to black */
-        }
-        @media only screen and (max-width: 300px) {
-            .slideshow-container h2, .slideshow-container p {
-                font-size: 11px; /* Adjust font size for small screens */
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class='slideshow-container'>
-        <img src="image.png" alt="Image" style="border-radius: 30%;margin-right: 30%" > <!-- Ensure the image displays properly and is oval -->
-        <h2  style="margin-right: 30%">${nome}</h2> <!-- Name below the image -->
-        <div style="margin-left: 60%"> <p>Messaggio: ${testotemp}</p></div>
-    </div>
-</body>
-</html>
- `;
-    } else if (templateType === TemplateType.TEMPLATE4) {
-      let base64Image = image1.split(";base64,").pop();
-      fs.writeFile(
-        `${dir}/image.png`,
-        base64Image,
-        { encoding: "base64" },
-        function (err) {
-          console.log(err);
-        }
-      );
-      templateHTML = `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>1</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        html, body {
-            height: 100%;
-        }
-        body {
-            font-family: Verdana, sans-serif;
-            background-image: url('https://www.marconisoftware.com/assets/04.png');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            min-height: 100%;
-        }
-        .slideshow-container {
-            max-width: 400px;
-            position: relative;
-            margin: auto;
-            text-align: right; /* Align the text to the right */
-            height: 100%; /* Ensure the container takes the full available height */
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; /* Align items to the start (left) */
-            justify-content: center; /* Center items vertically */
-        }
-        .slideshow-container img {
-            margin: 10px;
-            width: 150px; /* Adjust width as needed */
-            height: 200px; /* Adjust height as needed */
-            border-radius: 50%; /* Make the image oval */
-        }
-        .slideshow-container h2 {
-            margin-top: 10px;
-            text-align: left; /* Align the title to the left */
-            color: black; /* Set text color to black */
-        }
-        .slideshow-container p {
-            text-align: right; /* Align the paragraph to the right */
-            color: black; /* Set text color to black */
-        }
-        @media only screen and (max-width: 300px) {
-            .slideshow-container h2, .slideshow-container p {
-                font-size: 11px; /* Adjust font size for small screens */
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class='slideshow-container'>
-        <img src="image.png" alt="Image" style="border-radius: 30%;margin-right: 30%" > <!-- Ensure the image displays properly and is oval -->
-        <h2  style="margin-right: 30%">${nome}</h2> <!-- Name below the image -->
-        <div style="margin-left: 60%"> <p>Messaggio: ${testotemp}</p></div>
-    </div>
-</body>
-</html>
- `;
-    } else if (templateType === TemplateType.TEMPLATE5) {
-      let base64Image = image1.split(";base64,").pop();
-      fs.writeFile(
-        `${dir}/image.png`,
-        base64Image,
-        { encoding: "base64" },
-        function (err) {
-          console.log(err);
-        }
-      );
-      templateHTML = `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>1</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        html, body {
-            height: 100%;
-        }
-        body {
-            font-family: Verdana, sans-serif;
-            background-image: url('https://www.marconisoftware.com/assets/05.png');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            min-height: 100%;
-        }
-        .slideshow-container {
-            max-width: 400px;
-            position: relative;
-            margin: auto;
-            text-align: right; /* Align the text to the right */
-            height: 100%; /* Ensure the container takes the full available height */
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; /* Align items to the start (left) */
-            justify-content: center; /* Center items vertically */
-        }
-        .slideshow-container img {
-            margin: 10px;
-            width: 150px; /* Adjust width as needed */
-            height: 200px; /* Adjust height as needed */
-            border-radius: 50%; /* Make the image oval */
-        }
-        .slideshow-container h2 {
-            margin-top: 10px;
-            text-align: left; /* Align the title to the left */
-            color: black; /* Set text color to black */
-        }
-        .slideshow-container p {
-            text-align: right; /* Align the paragraph to the right */
-            color: black; /* Set text color to black */
-        }
-        @media only screen and (max-width: 300px) {
-            .slideshow-container h2, .slideshow-container p {
-                font-size: 11px; /* Adjust font size for small screens */
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class='slideshow-container'>
-        <img src="image.png" alt="Image" style="border-radius: 30%;margin-right: 30%" > <!-- Ensure the image displays properly and is oval -->
-        <h2  style="margin-right: 30%">${nome}</h2> <!-- Name below the image -->
-        <div style="margin-left: 60%"> <p>Messaggio: ${testotemp}</p></div>
-    </div>
-</body>
-</html>
- `;
-    } else if (templateType === TemplateType.TEMPLATE6) {
-      let base64Image = image1.split(";base64,").pop();
-      fs.writeFile(
-        `${dir}/image.png`,
-        base64Image,
-        { encoding: "base64" },
-        function (err) {
-          console.log(err);
-        }
-      );
-      templateHTML = `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>1</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1' />
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        html, body {
-            height: 100%;
-        }
-        body {
-            font-family: Verdana, sans-serif;
-            background-image: url('https://www.marconisoftware.com/assets/06.png');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            min-height: 100%;
-        }
-        .slideshow-container {
-            max-width: 400px;
-            position: relative;
-            margin: auto;
-            text-align: right; /* Align the text to the right */
-            height: 100%; /* Ensure the container takes the full available height */
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; /* Align items to the start (left) */
-            justify-content: center; /* Center items vertically */
-        }
-        .slideshow-container img {
-            margin: 10px;
-            width: 150px; /* Adjust width as needed */
-            height: 200px; /* Adjust height as needed */
-            border-radius: 50%; /* Make the image oval */
-        }
-        .slideshow-container h2 {
-            margin-top: 10px;
-            text-align: left; /* Align the title to the left */
-            color: black; /* Set text color to black */
-        }
-        .slideshow-container p {
-            text-align: right; /* Align the paragraph to the right */
-            color: black; /* Set text color to black */
-        }
-        @media only screen and (max-width: 300px) {
-            .slideshow-container h2, .slideshow-container p {
-                font-size: 11px; /* Adjust font size for small screens */
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class='slideshow-container'>
-        <img src="image.png" alt="Image" style="border-radius: 30%;margin-right: 30%" > <!-- Ensure the image displays properly and is oval -->
-        <h2  style="margin-right: 30%">${nome}</h2> <!-- Name below the image -->
-        <div style="margin-left: 60%"> <p>Messaggio: ${testotemp}</p></div>
-    </div>
-</body>
-</html>
- `;
+      fs.writeFileSync(path.join(baseDir, "index.html"), templateHTML);
+
+      return true;
+    } catch (error) {
+      console.error("Errore durante la generazione del template:", error);
+      return false;
     }
-    if (templateHTML.length > 0) {
-      fs.writeFile(`${dir}/index.html`, templateHTML, function (err) {
-        if (err) throw err;
-      });
+  }
+
+  /**
+   * Ottiene l'URL per l'immagine di sfondo in base al tipo di template
+   * @param templateType Tipo di template
+   * @returns URL dell'immagine di sfondo
+   */
+  private getTemplateBackgroundURL(templateType: TemplateType): string {
+    switch (templateType) {
+      case TemplateType.TEMPLATE1:
+        return "https://www.marconisoftware.com/assets/01.png";
+      case TemplateType.TEMPLATE2:
+        return "https://www.marconisoftware.com/assets/02.png";
+      case TemplateType.TEMPLATE3:
+        return "https://www.marconisoftware.com/assets/03.png";
+      case TemplateType.TEMPLATE4:
+        return "https://www.marconisoftware.com/assets/04.png";
+      case TemplateType.TEMPLATE5:
+        return "https://www.marconisoftware.com/assets/05.png";
+      case TemplateType.TEMPLATE6:
+        return "https://www.marconisoftware.com/assets/06.png";
+      default:
+        return "https://www.marconisoftware.com/assets/01.png";
     }
-    return true;
+  }
+
+  /**
+   * Assicura che una directory esista, altrimenti la crea
+   * @param dirPath Percorso della directory
+   */
+  private ensureDirectoryExists(dirPath: string): void {
+    if (fs.existsSync(dirPath)) {
+      // Elimina la directory esistente e il suo contenuto
+      fs.rmSync(dirPath, { recursive: true, force: true });
+    }
+    // Crea di nuovo la directory
+    fs.mkdirSync(dirPath, { recursive: true });
+  }
+
+  /**
+   * Salva un'immagine in formato base64 in un file
+   * @param base64Data Dati in base64
+   * @param filePath Percorso del file di destinazione
+   */
+  private saveBase64Image(base64Data: string, filePath: string): void {
+    const imageData = base64Data.split(";base64,").pop();
+    if (!imageData) {
+      throw new Error("Formato immagine base64 non valido");
+    }
+    fs.writeFileSync(filePath, imageData, "base64");
+  }
+
+  /**
+   * Scarica un'immagine da un URL e la salva in un file locale
+   * @param url URL dell'immagine
+   * @param filePath Percorso del file di destinazione
+   */
+  private async downloadAndSaveImage(
+    url: string,
+    filePath: string
+  ): Promise<void> {
+    try {
+      const response = await axios.get(url, { responseType: "arraybuffer" });
+      fs.writeFileSync(filePath, response.data);
+    } catch (error) {
+      console.error(
+        `Errore durante il download dell'immagine da ${url}:`,
+        error
+      );
+      throw error;
+    }
+  }
+
+  /**
+   * Genera il contenuto HTML del template
+   * @param templateType Tipo di template
+   * @param nome Nome da visualizzare
+   * @param testo Testo descrittivo
+   * @param backgroundFile Percorso del file di sfondo
+   * @returns Stringa HTML
+   */
+  private generateTemplateHTML(
+    templateType: TemplateType,
+    nome: string,
+    testo: string,
+    backgroundFile: string
+  ): string {
+    return `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>${nome}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; }
+        body {
+            font-family: Verdana, sans-serif;
+            background-image: url('${backgroundFile}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100%;
+        }
+        .slideshow-container {
+            max-width: 400px;
+            position: relative;
+            margin: auto;
+            text-align: right;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .slideshow-container img {
+            margin: 10px;
+            width: 150px;
+            height: 200px;
+            border-radius: 30%;
+        }
+        .slideshow-container h2 {
+            margin-top: 10px;
+            text-align: left;
+            color: black;
+        }
+        .slideshow-container p {
+            text-align: right;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <img src="image.png" alt="Image" />
+        <h2>${nome}</h2>
+        <p>${testo}</p>
+    </div>
+</body>
+</html>`;
   }
 }

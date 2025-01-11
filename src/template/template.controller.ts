@@ -1,27 +1,22 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
-  Put,
-  Param,
+  Logger,
   Delete,
-  UnauthorizedException,
+  Get,
+  Param,
+  Put,
 } from "@nestjs/common";
 import { TemplateService } from "./template.service";
-import { UpdateTemplateDto } from "./dto/update-template.dto";
-import { JwtService } from "@nestjs/jwt";
-import { request } from "express";
 import { TemplateType } from "src/support";
-import { ApiTags } from "@nestjs/swagger";
+import { UpdateTemplateDto } from "./dto/update-template.dto";
 
-@ApiTags("template")
 @Controller("template")
 export class TemplateController {
-  constructor(
-    private readonly service: TemplateService,
-    private jwtservice: JwtService
-  ) {}
+  private readonly logger = new Logger(TemplateController.name);
+
+  constructor(private readonly service: TemplateService) {}
 
   @Post("/generate")
   async generate(
@@ -35,12 +30,23 @@ export class TemplateController {
     @Body("templateType") templateType: TemplateType,
     @Body("idTotem") idTotem: number
   ) {
-    return await this.service.generatetemplate(
+    this.logger.log("Received request for /generate with the following data:");
+    this.logger.debug({
       nome,
       testo,
       image1,
       image2,
       image3,
+      idUser,
+      idCimitero,
+      templateType,
+      idTotem,
+    });
+
+    return await this.service.generatetemplate(
+      nome,
+      testo,
+      image1,
       idUser,
       idCimitero,
       idTotem,
@@ -50,16 +56,12 @@ export class TemplateController {
 
   @Get()
   async findAll() {
-    return !(await this.jwtservice.verifyAsync(request.cookies["jwt"]))
-      ? new UnauthorizedException()
-      : await this.service.findAll();
+    return await this.service.findAll();
   }
 
   @Get(":id")
   async findOne(@Param("id") id: string) {
-    return !(await this.jwtservice.verifyAsync(request.cookies["jwt"]))
-      ? new UnauthorizedException()
-      : await this.service.findOne(+id);
+    return await this.service.findOne(+id);
   }
 
   @Put(":id")
@@ -67,15 +69,11 @@ export class TemplateController {
     @Param("id") id: string,
     @Body() updateTemplateDto: UpdateTemplateDto
   ) {
-    return !(await this.jwtservice.verifyAsync(request.cookies["jwt"]))
-      ? new UnauthorizedException()
-      : await this.service.update(+id, updateTemplateDto);
+    return await this.service.update(+id, updateTemplateDto);
   }
 
   @Delete(":id")
   async remove(@Param("id") id: string) {
-    return !(await this.jwtservice.verifyAsync(request.cookies["jwt"]))
-      ? new UnauthorizedException()
-      : await this.service.remove(+id);
+    return await this.service.remove(+id);
   }
 }
