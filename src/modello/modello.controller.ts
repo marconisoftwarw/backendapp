@@ -21,13 +21,13 @@ import { ApiTags } from "@nestjs/swagger";
 export class ModelloController {
   constructor(
     private readonly modelloService: ModelloService,
-    private jwtservice: JwtService
+    private jwtservice: JwtService,
   ) {}
 
   @Post()
   async create(
     @Body() createModelloDto: CreateModelloDto,
-    @Req() request: Request
+    @Req() request: Request,
   ) {
     return !(await this.jwtservice.verifyAsync(request.cookies["jwt"]))
       ? new UnauthorizedException()
@@ -45,7 +45,7 @@ export class ModelloController {
   async update(
     @Param("id") id: string,
     @Body() updateModelloDto: UpdateModelloDto,
-    @Req() request: Request
+    @Req() request: Request,
   ) {
     return !(await this.jwtservice.verifyAsync(request.cookies["jwt"]))
       ? new UnauthorizedException()

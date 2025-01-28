@@ -9,7 +9,7 @@ import { sendEmail, UserType } from "../support";
 export class UserService {
   constructor(
     @InjectRepository(User) private repo: Repository<User>,
-    @InjectConnection() private readonly connection: Connection
+    @InjectConnection() private readonly connection: Connection,
   ) {}
   /**
    * Create new user
@@ -128,7 +128,7 @@ export class UserService {
       "Benvenuto all'interno del servizio Memoryp",
       email,
       "Registrazione Memoryp",
-      true
+      true,
     );
   }
 }

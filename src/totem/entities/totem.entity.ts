@@ -30,5 +30,5 @@ export class Totem extends typeorm.BaseEntity {
   totemHardware: Totemhardware;
 
   @typeorm.Column({ nullable: false })
-  idTotemHardware: number
+  idTotemHardware: number;
 }

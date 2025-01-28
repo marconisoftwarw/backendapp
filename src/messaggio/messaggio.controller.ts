@@ -41,7 +41,7 @@ export class MessaggioController {
   @Put(":id")
   update(
     @Param("id") id: string,
-    @Body() updateMessaggioDto: UpdateMessaggioDto
+    @Body() updateMessaggioDto: UpdateMessaggioDto,
   ) {
     return this.messaggioService.update(+id, updateMessaggioDto);
   }

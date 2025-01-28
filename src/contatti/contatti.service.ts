@@ -9,7 +9,7 @@ import { Contatti } from "./entities/contatti.entity";
 export class ContattiService {
   constructor(
     @InjectRepository(Contatti) private repo: Repository<Contatti>,
-    @InjectConnection() private readonly connection: Connection
+    @InjectConnection() private readonly connection: Connection,
   ) {}
   create(createContattiDto: CreateContattiDto) {
     return this.repo.save(createContattiDto);

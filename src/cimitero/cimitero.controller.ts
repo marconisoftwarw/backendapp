@@ -21,7 +21,7 @@ export class CimiteroController {
   @Post()
   async create(
     @Body() createCimiteroDto: CreateCimiteroDto,
-    @Req() request: Request
+    @Req() request: Request,
   ) {
     return await this.service.create(createCimiteroDto);
   }
@@ -44,7 +44,7 @@ export class CimiteroController {
   @Get("/get/:filename")
   generateFile(
     @Res({ passthrough: true }) res: Response,
-    @Param("filename") FilenNameDownload: string
+    @Param("filename") FilenNameDownload: string,
   ): StreamableFile {
     try {
       const fileName = "cimitero.zip";

@@ -19,7 +19,7 @@ import { ApiTags } from "@nestjs/swagger";
 export class TotemController {
   constructor(
     private readonly service: TotemService,
-    private jwtservice: JwtService
+    private jwtservice: JwtService,
   ) {}
   @Post()
   async create(@Body() createTotemDto: CreateTotemDto) {
@@ -41,7 +41,7 @@ export class TotemController {
   @Put(":id")
   async update(
     @Param("id") id: string,
-    @Body() updateTotemDto: UpdateTotemDto
+    @Body() updateTotemDto: UpdateTotemDto,
   ) {
     return !(await this.jwtservice.verifyAsync(request.cookies["jwt"]))
       ? new UnauthorizedException()

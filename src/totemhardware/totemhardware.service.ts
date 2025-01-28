@@ -8,7 +8,7 @@ import { Totemhardware } from "./entities/totemhardware.entity";
 @Injectable()
 export class TotemhardwareService {
   constructor(
-    @InjectRepository(Totemhardware) private repo: Repository<Totemhardware>
+    @InjectRepository(Totemhardware) private repo: Repository<Totemhardware>,
   ) {}
 
   create(dto: CreateTotemhardwareDto) {
