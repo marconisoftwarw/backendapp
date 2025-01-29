@@ -21,6 +21,7 @@ export class TotemController {
     private readonly service: TotemService,
     private jwtservice: JwtService,
   ) {}
+
   @Post()
   async create(@Body() createTotemDto: CreateTotemDto) {
     return await this.service.create(createTotemDto);
@@ -38,14 +39,10 @@ export class TotemController {
       : await this.service.findTotemByCimitero(+id);
   }
 
-  @Put(":id")
-  async update(
-    @Param("id") id: string,
-    @Body() updateTotemDto: UpdateTotemDto,
-  ) {
-    return !(await this.jwtservice.verifyAsync(request.cookies["jwt"]))
-      ? new UnauthorizedException()
-      : await this.service.update(+id, updateTotemDto);
+  @Put(":id/:idUtenteVisibile")
+  async update(@Param("id") id: string, @Param("idUtenteVisibile") idUtenteVisibile: number) {
+   console.log(idUtenteVisibile)
+    return await this.service.update(+id, idUtenteVisibile);
   }
 
   @Post("/delete")

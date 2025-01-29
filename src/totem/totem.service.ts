@@ -26,10 +26,13 @@ export class TotemService {
     }
     return listaTotemFilter;
   }
+async update(id: number, idUtenteVisibile: number) {
+  console.log("FASE 2");
+  console.log(idUtenteVisibile)
+  console.log(id);
+  return await this.repo.update(id, { idUtenteVisibile });
+}
 
-  async update(id: number, updateTotemDto: UpdateTotemDto) {
-    return await this.repo.update(id, updateTotemDto);
-  }
 
   async remove(id: number) {
     return await this.repo.delete(id);
