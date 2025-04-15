@@ -32,6 +32,6 @@ export class Totem extends typeorm.BaseEntity {
   @typeorm.Column({ nullable: false })
   idTotemHardware: number;
 
-  @typeorm.Column({ default: null})
+  @typeorm.Column({ default: null })
   idUtenteVisibile: number;
 }

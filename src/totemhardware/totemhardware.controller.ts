@@ -33,7 +33,7 @@ export class TotemhardwareController {
   @Put(":id")
   update(
     @Param("id") id: string,
-    @Body() updateTotemhardwareDto: UpdateTotemhardwareDto,
+    @Body() updateTotemhardwareDto: UpdateTotemhardwareDto
   ) {
     return this.totemhardwareService.update(+id, updateTotemhardwareDto);
   }

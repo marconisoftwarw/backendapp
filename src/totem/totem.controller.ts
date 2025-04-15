@@ -19,7 +19,7 @@ import { ApiTags } from "@nestjs/swagger";
 export class TotemController {
   constructor(
     private readonly service: TotemService,
-    private jwtservice: JwtService,
+    private jwtservice: JwtService
   ) {}
 
   @Post()
@@ -41,8 +41,11 @@ export class TotemController {
   }
 
   @Put(":id/:idUtenteVisibile")
-  async update(@Param("id") id: string, @Param("idUtenteVisibile") idUtenteVisibile: number) {
-   console.log(idUtenteVisibile)
+  async update(
+    @Param("id") id: string,
+    @Param("idUtenteVisibile") idUtenteVisibile: number
+  ) {
+    console.log(idUtenteVisibile);
     return await this.service.update(+id, idUtenteVisibile);
   }
 

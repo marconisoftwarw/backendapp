@@ -28,7 +28,7 @@ export class TemplateController {
     @Body("idUser") idUser: number,
     @Body("idCimitero") idCimitero: number,
     @Body("templateType") templateType: TemplateType,
-    @Body("idTotem") idTotem: number,
+    @Body("idTotem") idTotem: number
   ) {
     this.logger.log("Received request for /generate with the following data:");
     this.logger.debug({
@@ -50,7 +50,7 @@ export class TemplateController {
       idUser,
       idCimitero,
       idTotem,
-      templateType,
+      templateType
     );
   }
 
@@ -67,7 +67,7 @@ export class TemplateController {
   @Put(":id")
   async update(
     @Param("id") id: string,
-    @Body() updateTemplateDto: UpdateTemplateDto,
+    @Body() updateTemplateDto: UpdateTemplateDto
   ) {
     return await this.service.update(+id, updateTemplateDto);
   }

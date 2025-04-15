@@ -8,7 +8,7 @@ import { Messaggio } from "./entities/messaggio.entity";
 @Injectable()
 export class MessaggioService {
   constructor(
-    @InjectRepository(Messaggio) private repo: Repository<Messaggio>,
+    @InjectRepository(Messaggio) private repo: Repository<Messaggio>
   ) {}
 
   create(createMessaggioDto: CreateMessaggioDto) {
@@ -70,7 +70,7 @@ export class MessaggioService {
         { encoding: "base64" },
         function (err) {
           return err;
-        },
+        }
       );
       return imgpath;
     } catch (err) {

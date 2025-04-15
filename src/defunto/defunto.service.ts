@@ -9,7 +9,7 @@ import { sendEmail } from "../support";
 export class DefuntoService {
   constructor(
     @InjectRepository(Defunto) private repo: Repository<Defunto>,
-    @InjectConnection() private readonly connection: Connection,
+    @InjectConnection() private readonly connection: Connection
   ) {}
   async create(dto: CreateDefuntoDto) {
     return this.repo.save(dto);
@@ -62,7 +62,7 @@ export class DefuntoService {
     nome: String,
     cognome: String,
     email: String,
-    nomeDefunto: String,
+    nomeDefunto: String
   ) {
     return await sendEmail(
       nome +
@@ -72,7 +72,7 @@ export class DefuntoService {
         nomeDefunto,
       email,
       "Richiest MemoryRip",
-      true,
+      true
     );
   }
 }

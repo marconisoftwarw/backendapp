@@ -32,7 +32,7 @@ export class DefuntoController {
   async search(
     @Body("name") name: string,
     @Body("regione") regione: string,
-    @Body("citta") citta: string,
+    @Body("citta") citta: string
   ) {
     return await this.defuntoService.findByName(name, regione, citta);
   }
@@ -47,14 +47,14 @@ export class DefuntoController {
     @Body("nome") nome: string,
     @Body("cognome") cognome: string,
     @Body("email") email: string,
-    @Body("NomeDefunto") NomeDefunto: string,
+    @Body("NomeDefunto") NomeDefunto: string
   ) {
     console.log(nome, cognome, email, NomeDefunto);
     return await this.defuntoService.sendmail(
       nome,
       cognome,
       email,
-      NomeDefunto,
+      NomeDefunto
     );
   }
 }

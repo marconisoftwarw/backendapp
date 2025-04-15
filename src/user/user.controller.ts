@@ -13,7 +13,7 @@ import { sendEmail, UserType } from "../support";
 export class UserController {
   constructor(
     private readonly utenteService: UserService,
-    private jwtservice: JwtService,
+    private jwtservice: JwtService
   ) {}
 
   /**
@@ -49,7 +49,7 @@ export class UserController {
   @Post("/login")
   async login(
     @Body() dto: UtenteLogin,
-    @Res({ passthrough: true }) response: Response,
+    @Res({ passthrough: true }) response: Response
   ) {
     var message = "success";
 
@@ -79,7 +79,7 @@ export class UserController {
   @Get(":id")
   async findOne(
     @Param("id") id: string,
-    @Res({ passthrough: true }) response: Response,
+    @Res({ passthrough: true }) response: Response
   ) {
     return await this.utenteService.findOne(+id);
   }
@@ -95,7 +95,7 @@ export class UserController {
   async updatepassword(
     @Body("id") id: string,
     @Body("password") password: string,
-    @Req() request: Request,
+    @Req() request: Request
   ) {
     return await this.utenteService.updapassword(id, password);
   }
@@ -103,7 +103,7 @@ export class UserController {
   @Post("/sendmail")
   async sendmailtouser(
     @Body("email") email: string,
-    @Body("message") message: string,
+    @Body("message") message: string
   ) {
     try {
       console.log("messaggio");
