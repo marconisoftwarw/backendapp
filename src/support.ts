@@ -1,18 +1,13 @@
 "use strict";
 const nodemailer = require("nodemailer");
 
-/**
- * Define userType
- */
 export enum UserType {
   SUPERUSER = "SUPERUSER",
   ADMIN = "ADMIN",
   ADMIN1 = "ADMIN1",
   UTENTE = "UTENTE",
 }
-/**
- * Define of template user
- */
+
 export enum TemplateType {
   TEMPLATE1 = "TEMPLATE1",
   TEMPLATE2 = "TEMPLATE2",
@@ -20,6 +15,10 @@ export enum TemplateType {
   TEMPLATE4 = "TEMPLATE4",
   TEMPLATE5 = "TEMPLATE5",
   TEMPLATE6 = "TEMPLATE6",
+  TEMPLATE7 = "TEMPLATE7",
+  TEMPLATE8 = "TEMPLATE8",
+  TEMPLATE9 = "TEMPLATE9",
+  TEMPLATE10 = "TEMPLATE10",
 }
 
 /**

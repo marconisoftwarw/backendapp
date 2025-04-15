@@ -78,7 +78,7 @@ export class TemplateService {
     idUser: number,
     idCimitero: number,
     idTotem: number,
-    templateType: TemplateType,
+    templateType: TemplateType
   ): Promise<boolean> {
     try {
       const testoFinale = testo || " ";
@@ -95,7 +95,7 @@ export class TemplateService {
       const backgroundFile = path.join(baseDir, "background.png");
       await this.downloadAndSaveImage(
         this.getTemplateBackgroundURL(templateType),
-        backgroundFile,
+        backgroundFile
       );
 
       // Generazione del file HTML
@@ -103,7 +103,7 @@ export class TemplateService {
         templateType,
         nome,
         testoFinale,
-        "background.png",
+        "background.png"
       );
       fs.writeFileSync(path.join(baseDir, "index.html"), templateHTML);
 
@@ -133,6 +133,14 @@ export class TemplateService {
         return "https://www.marconisoftware.com/assets/05.png";
       case TemplateType.TEMPLATE6:
         return "https://www.marconisoftware.com/assets/06.png";
+      case TemplateType.TEMPLATE7:
+        return "https://www.marconisoftware.com/assets/07.png";
+      case TemplateType.TEMPLATE8:
+        return "https://www.marconisoftware.com/assets/08.png";
+      case TemplateType.TEMPLATE9:
+        return "https://www.marconisoftware.com/assets/09.png";
+      case TemplateType.TEMPLATE10:
+        return "https://www.marconisoftware.com/assets/10.png";
       default:
         return "https://www.marconisoftware.com/assets/01.png";
     }
@@ -171,7 +179,7 @@ export class TemplateService {
    */
   private async downloadAndSaveImage(
     url: string,
-    filePath: string,
+    filePath: string
   ): Promise<void> {
     try {
       const response = await axios.get(url, { responseType: "arraybuffer" });
@@ -179,7 +187,7 @@ export class TemplateService {
     } catch (error) {
       console.error(
         `Errore durante il download dell'immagine da ${url}:`,
-        error,
+        error
       );
       throw error;
     }
@@ -197,7 +205,7 @@ export class TemplateService {
     templateType: TemplateType,
     nome: string,
     testo: string,
-    backgroundFile: string,
+    backgroundFile: string
   ): string {
     return `
 <!DOCTYPE html>
