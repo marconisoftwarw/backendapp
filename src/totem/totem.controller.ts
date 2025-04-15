@@ -24,6 +24,7 @@ export class TotemController {
 
   @Post()
   async create(@Body() createTotemDto: CreateTotemDto) {
+    console.log(createTotemDto.idTotemHardware);
     return await this.service.create(createTotemDto);
   }
 
