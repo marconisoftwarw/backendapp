@@ -22,6 +22,7 @@ export class TemplateController {
   async generate(
     @Body("nome") nome: string,
     @Body("testo") testo: string,
+    @Body("messaggio") messaggio: string,
     @Body("image1") image1: string,
     @Body("image2") image2: string,
     @Body("image3") image3: string,
@@ -34,9 +35,7 @@ export class TemplateController {
     this.logger.debug({
       nome,
       testo,
-      image1,
-      image2,
-      image3,
+
       idUser,
       idCimitero,
       templateType,
@@ -50,7 +49,8 @@ export class TemplateController {
       idUser,
       idCimitero,
       idTotem,
-      templateType
+      templateType,
+      messaggio
     );
   }
 

@@ -78,7 +78,8 @@ export class TemplateService {
     idUser: number,
     idCimitero: number,
     idTotem: number,
-    templateType: TemplateType
+    templateType: TemplateType,
+    message: string
   ): Promise<boolean> {
     try {
       const testoFinale = testo || " ";
@@ -93,6 +94,7 @@ export class TemplateService {
 
       // Download dell'immagine di sfondo
       const backgroundFile = path.join(baseDir, "background.png");
+      console.log("templateType", templateType);
       await this.downloadAndSaveImage(
         this.getTemplateBackgroundURL(templateType),
         backgroundFile
@@ -102,7 +104,8 @@ export class TemplateService {
       const templateHTML = this.generateTemplateHTML(
         templateType,
         nome,
-        testoFinale,
+        testo,
+        message,
         "background.png"
       );
       fs.writeFileSync(path.join(baseDir, "index.html"), templateHTML);
@@ -204,7 +207,8 @@ export class TemplateService {
   private generateTemplateHTML(
     templateType: TemplateType,
     nome: string,
-    testo: string,
+    testo1: string,
+    testo2: string,
     backgroundFile: string
   ): string {
     return `
@@ -256,7 +260,9 @@ export class TemplateService {
     <div class="slideshow-container">
         <img src="image.png" alt="Image" />
         <h2>${nome}</h2>
-        <p>${testo}</p>
+        <br></br>
+        <p>${testo1}</p>
+        <p>${testo2}</p>
     </div>
 </body>
 </html>`;
