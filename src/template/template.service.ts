@@ -80,10 +80,9 @@ export class TemplateService {
     try {
       const testoFinale = testo || " ";
       const baseDir = `./cimitero${idCimitero}/${idTotem}`;
-      // Creazione della directory se non esiste
+    
       this.ensureDirectoryExists(baseDir);
 
-      // Salvataggio dell'immagine caricata dall'utente come "image.png"
       if (image1) {
         this.saveBase64Image(image1, path.join(baseDir, "image.png"));
       }
