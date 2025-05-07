@@ -43,12 +43,8 @@ export class TemplateService {
     try {
       const zip = new AdmZip();
       const outputFile = `${folderName}.zip`;
-
-      // Add folder to zip
       zip.addLocalFolder(`./${folderName}`);
       zip.writeZip(outputFile);
-
-      // Clean up: delete zip file after creation (optional)
       if (fs.existsSync(outputFile)) {
         fs.unlinkSync(outputFile);
       }
