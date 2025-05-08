@@ -80,7 +80,7 @@ export class TemplateService {
     try {
       const testoFinale = testo || " ";
       const baseDir = `./cimitero${idCimitero}/${idTotem}`;
-    
+
       this.ensureDirectoryExists(baseDir);
 
       if (image1) {
@@ -206,17 +206,17 @@ export class TemplateService {
     testo2: string,
     backgroundFile: string
   ): string {
-    return `
-<!DOCTYPE html>
+    if (templateType === TemplateType.TEMPLATE1) {
+      return `<!DOCTYPE html>
 <html>
 <head>
     <title>${nome}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { height: 100%; }
+        html, body { height: 100%; font-family: 'Roboto Slab', serif; }
         body {
-            font-family: Verdana, sans-serif;
             background-image: url('${backgroundFile}');
             background-size: cover;
             background-repeat: no-repeat;
@@ -224,29 +224,84 @@ export class TemplateService {
             min-height: 100%;
         }
         .slideshow-container {
-            max-width: 400px;
+            max-width: 600px;
             position: relative;
             margin: auto;
-            text-align: right;
+            text-align: left;
             height: 100%;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
+            justify-content: flex-start;
+            color: #00aaff;
         }
         .slideshow-container img {
-            margin: 10px;
+            margin: 10px 0;
             width: 150px;
-            height: 200px;
-            border-radius: 30%;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
         }
         .slideshow-container h2 {
             margin-top: 10px;
+        }
+        .slideshow-container p {
+            margin-top: 5px;
+        }
+        .slideshow-container .right-top {
+            text-align: right;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <p class="right-top">${testo2}</p>
+        <img src="image.png" alt="Image" />
+        <h2>${nome}</h2>
+        <p>${testo1}</p>
+    </div>
+</body>
+</html>`;
+    }
+    return `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>${nome}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; font-family: 'Roboto Slab', serif; }
+        body {
+            background-image: url('${backgroundFile}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100%;
+        }
+        .slideshow-container {
+            max-width: 600px;
+            position: relative;
+            margin: auto;
             text-align: left;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .slideshow-container img {
+            margin: 10px 0;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .slideshow-container h2 {
+            margin-top: 10px;
             color: black;
         }
         .slideshow-container p {
-            text-align: right;
             color: black;
         }
     </style>
@@ -255,7 +310,6 @@ export class TemplateService {
     <div class="slideshow-container">
         <img src="image.png" alt="Image" />
         <h2>${nome}</h2>
-        <br></br>
         <p>${testo1}</p>
         <p>${testo2}</p>
     </div>

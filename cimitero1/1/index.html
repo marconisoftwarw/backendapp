@@ -1,14 +1,13 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MIC MIC<br></br></title>
+    <title>Riccardo rossi<br></br></title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { height: 100%; }
+        html, body { height: 100%; font-family: 'Roboto Slab', serif; }
         body {
-            font-family: Verdana, sans-serif;
             background-image: url('background.png');
             background-size: cover;
             background-repeat: no-repeat;
@@ -16,40 +15,40 @@
             min-height: 100%;
         }
         .slideshow-container {
-            max-width: 400px;
+            max-width: 600px;
             position: relative;
             margin: auto;
-            text-align: right;
+            text-align: left;
             height: 100%;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
             justify-content: center;
+            color: #00aaff; /* Azzurro */
         }
         .slideshow-container img {
-            margin: 10px;
+            margin: 10px 0;
             width: 150px;
-            height: 200px;
-            border-radius: 30%;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
         }
         .slideshow-container h2 {
             margin-top: 10px;
-            text-align: left;
-            color: black;
         }
         .slideshow-container p {
+            margin-top: 5px;
+        }
+        .slideshow-container .right {
             text-align: right;
-            color: black;
         }
     </style>
 </head>
 <body>
     <div class="slideshow-container">
         <img src="image.png" alt="Image" />
-        <h2>MIC MIC<br></br></h2>
-        <br></br>
-        <p>sdds</p>
+        <h2>Riccardo rossi<br></br></h2>
         <p>sdsd</p>
+        <p class="right">sdsdsd</p>
     </div>
 </body>
 </html>
