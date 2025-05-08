@@ -95,7 +95,6 @@ export async function sendEmail(message, email, object, isHtml) {
         </div>`
       : messageToSend; // Usa solo il testo se non è HTML
 
-    // Invia l'email
     let info = await transporter.sendMail({
       from: '"Memoryp" <noreply@memoryp.org>',
       to: email,
