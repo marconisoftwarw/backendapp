@@ -206,6 +206,60 @@ export class TemplateService {
     testo2: string,
     backgroundFile: string
   ): string {
+    if (templateType === TemplateType.TEMPLATE2) {
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <title>${nome}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: 'Roboto Slab', serif; background: #fff; }
+    body {
+      background-image: url('${backgroundFile}');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #000;
+      padding: 20px;
+    }
+    .content {
+      max-width: 600px;
+      width: 100%;
+    }
+    .content img {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+    .content h2 {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .content p {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <img src="image.png" alt="Image" />
+    <h2>${nome}</h2>
+    <p>${testo1}</p>
+    <p>${testo2}</p>
+  </div>
+</body>
+</html>`;
+}
     if (templateType === TemplateType.TEMPLATE1) {
       return `<!DOCTYPE html>
 <html>
