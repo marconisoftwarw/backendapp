@@ -207,7 +207,7 @@ export class TemplateService {
     backgroundFile: string
   ): string {
     if (templateType === TemplateType.TEMPLATE2) {
-  return `<!DOCTYPE html>
+      return `<!DOCTYPE html>
 <html>
 <head>
   <title>${nome}</title>
@@ -259,7 +259,7 @@ export class TemplateService {
   </div>
 </body>
 </html>`;
-}
+    }
     if (templateType === TemplateType.TEMPLATE1) {
       return `<!DOCTYPE html>
 <html>
@@ -317,8 +317,8 @@ export class TemplateService {
 </body>
 </html>`;
     }
-  if (templateType === TemplateType.TEMPLATE3) {
-  return `<!DOCTYPE html>
+    if (templateType === TemplateType.TEMPLATE3) {
+      return `<!DOCTYPE html>
 <html>
 <head>
     <title>${nome}</title>
@@ -397,9 +397,9 @@ export class TemplateService {
     </div>
 </body>
 </html>`;
-  }
+    }
     if (templateType === TemplateType.TEMPLATE4) {
-  return `<!DOCTYPE html>
+      return `<!DOCTYPE html>
 <html>
 <head>
     <title>${nome}</title>
@@ -466,9 +466,9 @@ export class TemplateService {
     </div>
 </body>
 </html>`;
-}
-if (templateType === TemplateType.TEMPLATE5) {
-  return `<!DOCTYPE html>
+    }
+    if (templateType === TemplateType.TEMPLATE5) {
+      return `<!DOCTYPE html>
 <html>
 <head>
     <title>${nome}</title>
@@ -534,9 +534,9 @@ if (templateType === TemplateType.TEMPLATE5) {
     </div>
 </body>
 </html>`;
-}
-if (templateType === TemplateType.TEMPLATE6) {
-  return `<!DOCTYPE html>
+    }
+    if (templateType === TemplateType.TEMPLATE6) {
+      return `<!DOCTYPE html>
 <html>
 <head>
     <title>${nome}</title>
@@ -604,9 +604,9 @@ if (templateType === TemplateType.TEMPLATE6) {
     </div>
 </body>
 </html>`;
-}
-if (templateType === TemplateType.TEMPLATE7) {
-  return `<!DOCTYPE html>
+    }
+    if (templateType === TemplateType.TEMPLATE7) {
+      return `<!DOCTYPE html>
 <html>
 <head>
     <title>${nome}</title>
@@ -669,9 +669,9 @@ if (templateType === TemplateType.TEMPLATE7) {
     </div>
 </body>
 </html>`;
-}
+    }
     if (templateType === TemplateType.TEMPLATE8) {
-  return `<!DOCTYPE html>
+      return `<!DOCTYPE html>
 <html>
 <head>
   <title>${nome}</title>
@@ -734,9 +734,9 @@ if (templateType === TemplateType.TEMPLATE7) {
   </div>
 </body>
 </html>`;
-}
-if (templateType === TemplateType.TEMPLATE9) {
-  return `<!DOCTYPE html>
+    }
+    if (templateType === TemplateType.TEMPLATE9) {
+      return `<!DOCTYPE html>
 <html>
 <head>
   <title>${nome}</title>
@@ -802,9 +802,9 @@ if (templateType === TemplateType.TEMPLATE9) {
   </div>
 </body>
 </html>`;
-}
-if (templateType === TemplateType.TEMPLATE10) {
-  return `<!DOCTYPE html>
+    }
+    if (templateType === TemplateType.TEMPLATE10) {
+      return `<!DOCTYPE html>
 <html>
 <head>
   <title>${nome}</title>
@@ -871,8 +871,7 @@ if (templateType === TemplateType.TEMPLATE10) {
   </div>
 </body>
 </html>`;
-}
-
+    }
 
     return `
 <!DOCTYPE html>
