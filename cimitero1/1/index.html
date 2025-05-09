@@ -1,52 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Riccardo rossi<br></br></title>
+  <title>MIC MIC<br></br></title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; font-family: 'Roboto Slab', serif; background: #fff; }
-    body {
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
       background-image: url('background.png');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: #000;
-      padding: 20px;
+      height: 100%;
+      font-family: 'Roboto Slab', serif;
+      background-color: #ffffff;
     }
-    .content {
-      max-width: 600px;
+    .container {
+      display: flex;
+      height: 100vh;
       width: 100%;
     }
-    .content img {
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 20px;
+    .image-section {
+      width: 50%;
+      height: 100%;
+      position: relative;
     }
-    .content h2 {
+    .image-section img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .image-overlay {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: #ffffff;
       font-size: 32px;
       font-weight: bold;
-      margin-bottom: 15px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     }
-    .content p {
+    .text-section {
+      width: 50%;
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .text-section p {
       font-size: 18px;
-      margin-bottom: 10px;
+      line-height: 1.6;
+      color: #c2185b; /* rosa scuro */
+      margin-bottom: 15px;
     }
   </style>
 </head>
 <body>
-  <div class="content">
-    <img src="image.png" alt="Image" />
-    <h2>Riccardo rossi<br></br></h2>
-    <p>sds</p>
-    <p>dsdsd</p>
+  <div class="container">
+    <div class="image-section">
+      <img src="image.png" alt="Immagine" />
+      <div class="image-overlay">MIC MIC<br></br></div>
+    </div>
+    <div class="text-section">
+      <p>sdsd</p>
+      <p>dsd</p>
+    </div>
   </div>
 </body>
 </html>

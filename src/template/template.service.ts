@@ -317,6 +317,563 @@ export class TemplateService {
 </body>
 </html>`;
     }
+  if (templateType === TemplateType.TEMPLATE3) {
+  return `<!DOCTYPE html>
+<html>
+<head>
+    <title>${nome}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; font-family: 'Roboto Slab', serif; }
+        body {
+            background-image: url('${backgroundFile}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100%;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            max-width: 800px;
+            margin: auto;
+            height: 100%;
+            color: #00aaff;
+            padding: 20px;
+        }
+        .right-top {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .image-section {
+            flex: 0 0 160px;
+            text-align: center;
+        }
+        .image-section img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .image-section p {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .text-section {
+            flex: 1;
+            padding-left: 30px;
+        }
+        .text-section h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .text-section p {
+            font-size: 16px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="right-top">${testo2}</div>
+        <div class="content">
+            <div class="image-section">
+                <img src="image.png" alt="Image" />
+                <p>${nome}</p>
+            </div>
+            <div class="text-section">
+                <h2>In ricordo di ${nome}</h2>
+                <p>${testo1}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>`;
+  }
+    if (templateType === TemplateType.TEMPLATE4) {
+  return `<!DOCTYPE html>
+<html>
+<head>
+    <title>${nome}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; font-family: 'Roboto Slab', serif; }
+        body {
+            background-image: url('${backgroundFile}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100%;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            max-width: 800px;
+            margin: auto;
+            height: 100%;
+            padding: 20px;
+            color: #00aaff;
+        }
+        .image-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 200px;
+        }
+        .image-block img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .image-block .text {
+            margin-top: 15px;
+        }
+        .image-block .text h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        .image-block .text p {
+            font-size: 16px;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-block">
+            <img src="image.png" alt="Image" />
+            <div class="text">
+                <h2>${nome}</h2>
+                <p>${testo1}</p>
+                <p>${testo2}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>`;
+}
+if (templateType === TemplateType.TEMPLATE5) {
+  return `<!DOCTYPE html>
+<html>
+<head>
+    <title>${nome}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+         background-image: url('${backgroundFile}');
+            height: 100%;
+            font-family: 'Roboto Slab', serif;
+            overflow: hidden;
+        }
+        body {
+            background-color: #000;
+            color: #ffffff;
+        }
+        .container {
+            display: flex;
+            height: 100%;
+            width: 100%;
+        }
+        .text-section {
+            width: 50%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        .text-section h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #00aaff;
+        }
+        .text-section p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: #dddddd;
+        }
+        .image-section {
+            width: 50%;
+            height: 100%;
+        }
+        .image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-section">
+            <h1>${nome}</h1>
+            <p>${testo1}</p>
+            <p>${testo2}</p>
+        </div>
+        <div class="image-section">
+            <img src="image.png" alt="Immagine" />
+        </div>
+    </div>
+</body>
+</html>`;
+}
+if (templateType === TemplateType.TEMPLATE6) {
+  return `<!DOCTYPE html>
+<html>
+<head>
+    <title>${nome}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+         background-image: url('${backgroundFile}');
+            height: 100%;
+            font-family: 'Roboto Slab', serif;
+            overflow: hidden;
+        }
+        body {
+            background-color: #000;
+            color: #ffffff;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+            width: 100%;
+        }
+        .text-section {
+            width: 50%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        .text-section h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #00aaff;
+        }
+        .text-section p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: #dddddd;
+        }
+        .image-section {
+            width: 50%;
+            height: 100%;
+        }
+        .image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-section">
+            <h1>${nome}</h1>
+            <p>${testo1}</p>
+            <p>${testo2}</p>
+        </div>
+        <div class="image-section">
+            <img src="image.png" alt="Immagine" />
+        </div>
+    </div>
+</body>
+</html>`;
+}
+if (templateType === TemplateType.TEMPLATE7) {
+  return `<!DOCTYPE html>
+<html>
+<head>
+    <title>${nome}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+         background-image: url('${backgroundFile}');
+            height: 100%;
+            font-family: 'Roboto Slab', serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+        .text-section {
+            width: 50%;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: #ffffff;
+        }
+        .text-section h1 {
+            font-size: 32px;
+            color: #333333; /* grigio scuro */
+            margin-bottom: 20px;
+        }
+        .text-section p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555555;
+            margin-bottom: 10px;
+        }
+        .image-section {
+            width: 50%;
+            height: 100%;
+        }
+        .image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-section">
+            <h1>${nome}</h1>
+            <p>${testo1}</p>
+            <p>${testo2}</p>
+        </div>
+        <div class="image-section">
+            <img src="image.png" alt="Immagine" />
+        </div>
+    </div>
+</body>
+</html>`;
+}
+    if (templateType === TemplateType.TEMPLATE8) {
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <title>${nome}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+     background-image: url('${backgroundFile}');
+      height: 100%;
+      font-family: 'Roboto Slab', serif;
+      background-color: #f0f0f0;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100%;
+    }
+    .image-section {
+      width: 50%;
+      height: 100%;
+    }
+    .image-section img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .text-section {
+      width: 50%;
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: #ffffff;
+    }
+    .text-section h1 {
+      font-size: 32px;
+      color: #333333; /* grigio scuro */
+      margin-bottom: 20px;
+    }
+    .text-section p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #555555;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="image-section">
+      <img src="image.png" alt="Immagine" />
+    </div>
+    <div class="text-section">
+      <h1>${nome}</h1>
+      <p>${testo1}</p>
+      <p>${testo2}</p>
+    </div>
+  </div>
+</body>
+</html>`;
+}
+if (templateType === TemplateType.TEMPLATE9) {
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <title>${nome}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+       background-image: url('${backgroundFile}');
+      font-family: 'Roboto Slab', serif;
+      background-color: #f5f5f5;
+    }
+    .container {
+      padding: 40px;
+    }
+    .top-section {
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .image-section {
+      width: 150px;
+      height: 150px;
+      margin-right: 30px;
+    }
+    .image-section img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+    }
+    .text-section {
+      flex: 1;
+      min-width: 200px;
+    }
+    .text-section h1 {
+      font-size: 28px;
+      color: #333333;
+      margin-bottom: 15px;
+    }
+    .text-section p {
+      font-size: 17px;
+      color: #555555;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-section">
+      <div class="image-section">
+        <img src="image.png" alt="Immagine" />
+      </div>
+      <div class="text-section">
+        <h1>${nome}</h1>
+        <p>${testo1}</p>
+        <p>${testo2}</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
+}
+if (templateType === TemplateType.TEMPLATE10) {
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <title>${nome}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      background-image: url('${backgroundFile}');
+      height: 100%;
+      font-family: 'Roboto Slab', serif;
+      background-color: #ffffff;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100%;
+    }
+    .image-section {
+      width: 50%;
+      height: 100%;
+      position: relative;
+    }
+    .image-section img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .image-overlay {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: #ffffff;
+      font-size: 32px;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+    .text-section {
+      width: 50%;
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .text-section p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #c2185b; /* rosa scuro */
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="image-section">
+      <img src="image.png" alt="Immagine" />
+      <div class="image-overlay">${nome}</div>
+    </div>
+    <div class="text-section">
+      <p>${testo1}</p>
+      <p>${testo2}</p>
+    </div>
+  </div>
+</body>
+</html>`;
+}
+
+
     return `
 <!DOCTYPE html>
 <html>
